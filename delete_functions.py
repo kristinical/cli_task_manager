@@ -1,25 +1,26 @@
 from os import system
 from prompts import *
 from main_functions import to_do_list
+from add_functions import width
 
-
-def delete_header():
-    system('clear')
-    print("DELETE A TASK\n".center(40))
-    
 
 def delete_task():
     if no_tasks(): return
-    delete_header()
+    system('clear')
+    print(delete_header)
     list_valid_tasks()
-    delete_index = validate_task("What task do you want to delete? ")
-    confirm = confirm_deletion(delete_index[0])
+    delete_item = validate_task(delete_prompt, delete_header)
+    confirm = confirm_deletion(delete_item[0])
+    process_deletion(confirm, delete_item[1])
+
+
+def process_deletion(confirm, index):
     system('clear')
     if confirm == "y":
-        del to_do_list[delete_index[1]]
-        print("TASK DELETED!\n".center(40))
-    elif confirm == "n":
-        print("DELETE ACTION CANCELLED\n".center(40))
+        del to_do_list[index]
+        print("TASK DELETED!\n".center(width))
+    else:
+        print("DELETE ACTION CANCELLED\n".center(width))
 
 
 def no_tasks():
@@ -28,14 +29,15 @@ def no_tasks():
         return True
 
 
-def validate_task(message):
-    name = input(message)
+def validate_task(prompt, header):
+    name = input(prompt)
     task_index = valid_task(name.capitalize())
     while task_index == -1:
-        delete_header()
-        print("Task does not exist.\n")
+        system('clear')
+        print(header)
+        print("\tTask does not exist.\n")
         list_valid_tasks()
-        name = input(message)
+        name = input(prompt)
         task_index = valid_task(name.capitalize())
     return name.capitalize(), task_index
 
@@ -51,16 +53,16 @@ def list_valid_tasks():
     """
     Displays list of current tasks on To-Do List in alphabetical order
     """
-    print("Current tasks:")
+    print("\tCurrent tasks:")
     to_do_list.sort(key = lambda x: x['Task'])
     for task in to_do_list:
-        print("  " + task['Task'])
+        print("\t  " + task['Task'])
     print()
 
 
 def confirm_deletion(task):
-    delete = input(f'Are you sure you want to delete "{task}"? (y/n) ')
+    delete = input(f'\tAre you sure you want to delete "{task}"? (y/n) ')
     while delete != "y" and delete != "n":
-        print("\nPlease press 'y' for yes or 'n' for no.")
-        delete = input(f'Are you sure you want to delete "{task}"? ')
+        print("\n\tPlease press 'y' for yes or 'n' for no.")
+        delete = input(f'\tAre you sure you want to delete "{task}"? ')
     return delete

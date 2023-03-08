@@ -1,2 +1,6 @@
+{"Task": "New task", "Due": "03-07-2023", "Complete": "03-08-2023"}
+{"Task": "This is a new task", "Due": "03-08-2023", "Complete": "03-08-2023"}
+{"Task": "Test", "Due": "03-10-2023", "Complete": "03-08-2023"}
+{"Task": "Test", "Due": "04-12-2023", "Complete": "03-08-2023"}
 {"Task": "Sad", "Due": "03-17-2023", "Complete": "03-07-2023"}
 {"Task": "Homework", "Due": "03-12-2023", "Complete": "03-07-2023"}

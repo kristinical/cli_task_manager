@@ -2,7 +2,7 @@ from completed_tasks import *
 
 system('clear')
 open_task_lists()
-print(welcome_message.center(40))
+print(welcome_message.center(width))
 action = menu_selection()
 
 """
@@ -23,9 +23,10 @@ while action != "6":
             view_completed_tasks()
         case _:
             system('clear')
-            print("INVALID SELECTION.\n")
+            print("INVALID SELECTION (choose 1-6)\n".center(width))
     action = menu_selection()
 
 system('clear')
 save_task_lists()
+print(tasks_saved)
 print(goodbye)

@@ -1,31 +1,33 @@
 from datetime import date
 from main_functions import *
 
-def complete_task_header():
-    system('clear')
-    print("COMPLETE A TASK\n".center(40))
-
 
 def complete_task():
     if no_tasks(): return
-    complete_task_header()
-    list_valid_tasks()
-    complete_index = validate_task("What task have you completed? ")
-    confirm = confirm_completion(complete_index[0])
     system('clear')
-    if confirm == "y":
-        save_completed_task(to_do_list[complete_index[1]])
-        del to_do_list[complete_index[1]]
-        print("TASK MARKED AS COMLETE!\n".center(40))
-    elif confirm == "n":
-        print("TASK COMPLETION ACTION CANCELLED\n".center(40))
+    print(complete_header)
+    list_valid_tasks()
+    complete_item = validate_task(complete_prompt, complete_header)
+    confirm_completion(complete_item)
 
 
 def confirm_completion(task):
-    complete = input(f'Are you sure you want to mark "{task}" as complete? (y/n) ')
+    # task is a (name, index) tuple
+    confirm = confirmation(task[0])
+    system('clear')
+    if confirm == "y":
+        save_completed_task(to_do_list[task[1]])
+        del to_do_list[task[1]]
+        print("TASK MARKED AS COMLETE!\n".center(width))
+    else:
+        print("TASK COMPLETION ACTION CANCELLED\n".center(width))
+
+
+def confirmation(task):
+    complete = input(f'\tAre you sure you want to mark "{task}" as complete? (y/n) ')
     while complete != "y" and complete != "n":
-        print("\nPlease press 'y' for yes or 'n' for no.")
-        complete = input(f'Are you sure you want to mark "{task}" as complete? ')
+        print("\n\tPlease press 'y' for yes or 'n' for no.")
+        complete = input(f'\tAre you sure you want to mark "{task}" as complete? ')
     return complete
 
 
@@ -39,9 +41,9 @@ def save_completed_task(task):
 
 def view_completed_tasks():
     system('clear')
-    print("COMPLETED TASKS:\n".center(40))
+    print("COMPLETED TASKS:\n".center(width))
     if len(completed_tasks) == 0:
-        print(no_completed_tasks.center(40))
+        print(no_completed_tasks.center(width))
         print('\n')
     else:
         sort_completed_list()
@@ -60,5 +62,5 @@ def print_completed_list():
     for item in completed_tasks:
         task = item['Task']
         completed_date = item['Complete']
-        print(f'{task:>12} –– Completed {completed_date:<20}'.center(40))
+        print(f'{task:>30} –– Completed {completed_date:<30}'.center(width)) 
     print('\n')

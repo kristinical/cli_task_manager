@@ -9,8 +9,8 @@ completed_tasks = []
 
 def open_task_lists():
     """
-    Open txt files to load To-Do List tasks and 
-    Completed Tasks from previous session(s)
+    Open txt files to load To-Do List Tasks and 
+    Completed Tasks saved from previous session
     """
     open_tasks()
     open_completed_tasks()
@@ -41,7 +41,7 @@ def open_completed_tasks():
 
 def save_task_lists():
     """
-    Write to txt files to save To-Do List tasks and 
+    Write to txt files to save To-Do List Tasks and 
     Completed Tasks for next session
     """
     save_tasks()
@@ -61,12 +61,13 @@ def save_completed_tasks():
         task_list.writelines([json.dumps(task), '\n'])
     task_list.close()
 
+
 def get_message(date):
     """
     Call to partner's microservice that sends a date and receives a
     message string that tells user when each task is due
     """
-    url = f"http://localhost:8080/due/{date}"
+    url = f"http://localhost:8081/due/{date}"
     response = requests.get(url)
     json_data = json.loads(response.text)
     message = json_data['message']
